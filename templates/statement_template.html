@@ -1,0 +1,100 @@
+<html>
+<head>
+    <title>{{ title }}</title>
+    <style>
+        /* Define your CSS styles here */
+        .logo {
+            width: 100px;
+            height: 100px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+        
+        .unpaid {
+        color: red;
+    }
+        
+    </style>
+    <div class="logo-container"></div>
+</head>
+<body>
+    <h1>{{ heading }}</h1>
+    <p>{{ content }}</p>
+
+    <h2>Details:</h2>
+    <ul>
+        {% for detail in details_list %}
+        <li>{{ detail }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Payments:</h2>
+    <table>
+        <tr>
+            {% for column in columns %}
+            <th>{{ column }}</th>
+            {% endfor %}
+        </tr>
+        {% for row in table_rows %}
+        <tr>
+        {% for value, css_class in zip_values_and_classes(row['values'], row['css_classes']) %}
+        <td class="{{ css_class }}">{{ value }}</td>
+        {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% if table_rows_future_month %}
+    <h2>Payments for future months:</h2>
+    <table>
+        <tr>
+            {% for column in columns %}
+            <th>{{ column }}</th>
+            {% endfor %}
+        </tr>
+        {% for row in table_rows_future_month %}
+        <tr>
+        {% for value, css_class in zip_values_and_classes(row['values'], row['css_classes']) %}
+        <td class="{{ css_class }}">{{ value }}</td>
+        {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+    {% if third_table_rows %}
+    <h2>Electricity and Water Payments:</h2>
+    <table>
+        <tr>
+            {% for column in third_table_columns %}
+            <th>{{ column }}</th>
+            {% endfor %}
+        </tr>
+        {% for row in third_table_rows %}
+        <tr>
+        {% for value, css_class in zip_values_and_classes(row['values'], row['css_classes']) %}
+        <td class="{{ css_class }}">{{ value }}</td>
+        {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+    <!-- Add the 'Comments' section -->
+    <h2>Comments:</h2>
+    <p>{{ comments }}</p>
+</body>
+</html>
